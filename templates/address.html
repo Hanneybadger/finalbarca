@@ -1,47 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
 
-
-<!-- basic needs -->
-  <meta charset="utf-8">
-  <title>Hanneybadger</title>
-  <meta name="description" content="">
-  <meta name="author" content="">
-
-<!-- mobile specific metas -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-<!-- font -->
-<link href='https://fonts.googleapis.com/css?family=Raleway:100,900' rel='stylesheet' type='text/css'>
-
-<!-- CSS -->
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/skeleton.css">
-
-<!-- favicon -->
-<link rel="icon" type="image/png" href="images/favicon.png">
-
-<!-- javascripts -->
-<script type="text/javascript" src="js/instafeed.min.js"></script>
-<!--<script type="text/javascript" src="js/main.js"></script>-->
-
-<script type="text/javascript">
-    var feed = new Instafeed({
-        get: 'tagged',
-        tagName: 'awesome',
-        clientId: ' d1bc2500377043ea9565c4b98b98f485'
-    });
-    feed.run();
-</script>
-
+<html><head>
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/3.3.0/masonry.pkgd.min.js"></script>
 <script src="/static/imagesloaded.pkgd.min.js"></script>
-
-</head>
-
-<!-- OLD css:
 <style>
 body {
     overflow-x: hidden;
@@ -68,27 +29,27 @@ body {
     color: white;
 }
 </style>
-</head> -->
-
+</head>
 <body>
 
-<div class="container">
+<!--
+<h2>Map</h2>
+<img src="{{ static_map }}" alt="Static Map" style="width:600;height:400px;">
+<h2>Street View</h2>
+<img src="{{ street_view }}" alt="Street View" style="width:600;height:400px;">
+<div class="float-center">
+These are the most recent photos with the {{ hashtag }}-hashtag, located at {{ lati }}, {{ longi }}!
+</p><p>
+The weather here is: {{ weather }}.
+</div>
+-->
 
-  <div class="row">
-    <div class="twelve columns" style="margin-top: 5%">
-      <h1>Bilder på 100 tjejer</h1>
-      <p>Som kodar i barcelona.</p>
-    </div>
-  </div>
+<div class="grid grid js-masonry">
+{% for photo in photos['data'] %}
+ <div class="grid-item"><img src="{{ photo['images']['low_resolution']['url'] }}"></div>
+{% endfor %}
 </div>
 
-  <div class="row">
-  {% for photo in photos['data'] %}
-   <div class="twelve columns"><img src="{{ photo['images']['low_resolution']['url'] }}"></div>
-  {% endfor %}
-  </div>
-
-<!--
 <script>
 var $grid = $('.grid').imagesLoaded(function() {
     $grid.masonry({
@@ -99,6 +60,6 @@ var $grid = $('.grid').imagesLoaded(function() {
           percentPosition: true
         });
 });
-</script> -->
+</script>
 </body>
 </html>
