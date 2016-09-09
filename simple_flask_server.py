@@ -24,13 +24,13 @@ static_folder = os.path.join(proj_dir, 'static')
 app = Flask(__name__)
 
 
-def get_photos(lati, longi):
+def get_photos(hashtag):
     '''
     This method queries Instagram 'media/search' 
     (https://www.instagram.com/developer/endpoints/media/)
     API endpoint for a given lati/longi and returns the reply as a json()
     '''
-    insta_address = "https://api.instagram.com/v1/media/search?lat={}&lng={}&access_token={}".format(lati,longi,INSTA_ACCESS_TOKEN)
+    insta_address = "https://api.instagram.com/v1/tags/search?q={}&access_token={}".format(hashtag, INSTA_ACCESS_TOKEN)
 
     photos = requests.get(insta_address)
     
@@ -50,11 +50,13 @@ def _get_weather(lati, longi):
     return d["currently"]["summary"]
 
 
-# def _get_hashtag(hashtag):
-#     '''
-#     I want this to define an instagramhashtag that the get_photos-function can use instead of lati, longi.
-#     '''
-    
+def _get_hashtag(hashtag):
+    '''
+    I want this to define an instagramhashtag that the get_photos-function can use instead of lati, longi.
+    '''
+    hashtag = "https://api.instagram.com/v1/tags/search?q={}&access_token={}".format(tjejerkodar, INSTA_ACCESS_TOKEN)
+
+    return hashtag.json()
 
 
 
@@ -145,7 +147,7 @@ def describe_address(address):
     weather = _get_weather(lati, longi)
 
     # This is a list jsons which has a )
-    photos_urls = get_photos(lati, longi)
+    photos_urls = get_photos(hashtag)
 
     # These are filenames for a jpg file containing the image
     static_map = get_static_map(lati, longi)
