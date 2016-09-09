@@ -30,11 +30,27 @@ def get_photos(hashtag):
     (https://www.instagram.com/developer/endpoints/media/)
     API endpoint for a given lati/longi and returns the reply as a json()
     '''
-    insta_address = "https://api.instagram.com/v1/tags/search?q={}&access_token={}".format(hashtag, INSTA_ACCESS_TOKEN)
+    insta_address = "https://api.instagram.com/v1/tags/search?q=tjejerkodar&access_token={}".format(INSTA_ACCESS_TOKEN)
 
     photos = requests.get(insta_address)
     
     return photos.json()
+
+def _get_hashtag(insta_address):
+
+    '''
+    I want this to define an instagramhashtag that the get_photos-function can use instead of lati, longi.
+    '''
+    # insta_address = "https://api.instagram.com/v1/tags/search?q=tjejerkodar&access_token={}".format(INSTA_ACCESS_TOKEN)
+
+    # hashtag = request.get(insta_address)
+
+    # return hashtag.json()
+
+    insta_tag = "https://api.instagram.com/v1/tags/search?q={}&access_token={}".format(tjejerkodar, INSTA_ACCESS_TOKEN)
+
+    return insta_tag.json()
+
 
 def _get_weather(lati, longi):
     '''
@@ -48,16 +64,6 @@ def _get_weather(lati, longi):
     d = r.json()
 
     return d["currently"]["summary"]
-
-
-def _get_hashtag(hashtag):
-    '''
-    I want this to define an instagramhashtag that the get_photos-function can use instead of lati, longi.
-    '''
-    hashtag = "https://api.instagram.com/v1/tags/search?q={}&access_token={}".format(tjejerkodar, INSTA_ACCESS_TOKEN)
-
-    return hashtag.json()
-
 
 
 def _get_lati_longi(address):
@@ -143,6 +149,8 @@ def index():
 def describe_address(address):
     lati, longi = _get_lati_longi(address)
 
+    hashtag = _get_hashtag(hashtag)
+
     # This is just text describing the weather
     weather = _get_weather(lati, longi)
 
@@ -156,7 +164,7 @@ def describe_address(address):
     return render_template('./address.html', address=address.capitalize(),
                            lati=lati, longi=longi, weather=weather,
                            photos=photos_urls, static_map=static_map,
-                           street_view=street_view)
+                           street_view=street_view),
 
 
 if __name__ == "__main__":
