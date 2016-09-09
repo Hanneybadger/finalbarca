@@ -1,0 +1,8 @@
+Insta API tokens:
+
+Access Token
+1233376.e029fea.bb5a53f0d27445a1b00851b91f378094
+
+User ID
+1233376
+
